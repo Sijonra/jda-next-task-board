@@ -1,0 +1,85 @@
+@import '../../../styles/bundle.scss';
+
+.heading {
+	font-size: 14px;
+
+	//   h1,h2,h3,h4,h5,h6{
+	//       margin: 0;
+	//       padding: 0;
+	//   }
+
+	&__item {
+		color: $color-text-dark;
+		font-family: $font-SF-PRO-DISPLAY;
+		font-weight: 500;
+		&_jumbo {
+			font-size: 35px;
+			line-height: 40px;
+			margin-bottom: 52px;
+			margin-top: 0;
+		}
+
+		&_oversized {
+			font-size: 29px;
+			line-height: 32px;
+			margin-bottom: 40px;
+			margin-top: 0;
+		}
+
+		&_introduction {
+			font-size: 24px;
+			line-height: 28px;
+			margin-bottom: 40px;
+			margin-top: 0;
+		}
+
+		&_key {
+			font-size: 20px;
+			line-height: 24px;
+			margin-bottom: 28px;
+			margin-top: 0;
+		}
+
+		&_sub {
+			font-size: 16px;
+			line-height: 20px;
+			margin-bottom: 24px;
+			font-family: $font-SF-PRO-TEXT;
+			margin-top: 0;
+		}
+
+		&_deep {
+			font-size: 14px;
+			line-height: 20px;
+			margin-bottom: 16px;
+			font-family: $font-SF-PRO-TEXT;
+			margin-top: 0;
+		}
+
+		&_list-item {
+			font-size: 12px;
+			line-height: 16px;
+			margin-bottom: 16px;
+			font-family: $font-SF-PRO-TEXT;
+			margin-top: 0;
+		}
+
+		&_low {
+			font-size: 12px;
+			line-height: 16px;
+			margin-bottom: 16px;
+			font-family: $font-SF-PRO-TEXT;
+			color: $color-text-light;
+			margin-top: 0;
+		}
+
+		&_lowest {
+			font-size: 11px;
+			line-height: 16px;
+			margin-bottom: 16px;
+			font-family: $font-SF-PRO-TEXT;
+			color: $color-text-light;
+			margin-top: 0;
+		}
+	}
+}

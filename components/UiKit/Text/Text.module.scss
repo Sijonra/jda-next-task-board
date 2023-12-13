@@ -1,0 +1,35 @@
+@import '../../../styles/bundle.scss';
+
+.text {
+	font-family: $font-SF-PRO-TEXT;
+	&__item {
+		color: $color-text-dark;
+
+		&_small {
+			font-size: 12px;
+			line-height: 16px;
+		}
+
+		&_medium {
+			font-size: 14px;
+			line-height: 20px;
+		}
+
+		&_large {
+			font-size: 16px;
+			line-height: 20px;
+		}
+
+		&_default {
+			font-weight: 400;
+		}
+
+		&_md {
+			font-weight: 500;
+		}
+
+		&_semibold {
+			font-weight: 600;
+		}
+	}
+}
