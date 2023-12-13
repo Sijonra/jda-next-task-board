@@ -1,0 +1,67 @@
+@import "../../styles/bundle.scss";
+
+.board-column {
+	padding: 20px;
+	background-color: $color-teal-lightest;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	border-radius: 6px;
+	min-height: 92vh;
+	width: 400px;
+
+	&:not(:last-child) {
+		margin-right: 40px;
+	}
+
+
+	&__title{
+		margin-bottom: 20px;
+		text-transform: uppercase;
+		font-family: $font-SF-PRO-TEXT;
+		font-weight: 700;
+		font-size: 22px;
+		color: $color-text-default;
+	}
+
+	&__card {
+		width: 100%;
+		height: auto;
+		cursor: grab;
+
+		&:not(:last-child) {
+			margin-bottom: 20px;
+		}
+	}
+
+	@media (max-width: 1340px){
+		width: 200px;
+	}
+}
+
+.board__column{
+	&--over{
+		transition: .2s;
+		background: $color-teal-light;
+		box-shadow: 8px 8px 8px $color-text-light;
+	}
+}
+
+.board-card{
+	position: relative;
+	font-family: $font-SF-PRO-TEXT;
+	
+	&__badge{
+		position: absolute;
+		top: 1.5em;
+		left: 1.5em;
+	}
+
+	&__close{
+		width: 2em;
+		height: 2em;
+		position: absolute;
+		top: 1em;
+		right: 1em;
+	}
+}

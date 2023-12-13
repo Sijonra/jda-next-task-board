@@ -1,6 +1,6 @@
-import { FC } from "react";
-import style from "./Card.module.scss";
-import { useDrag } from "../Context/DragContext";
+import { FC } from 'react';
+import style from './Card.module.scss';
+import { useDrag } from '../../Context/DragContext';
 
 interface CardProps {
 	elevation: 1 | 2 | 3;
@@ -39,16 +39,15 @@ const Card: FC<CardProps> = ({
 				onDragEnd={handleDragEnd}
 				draggable={draggable}
 				className={
-					style["card"] +
-					" " +
-					style["card__" + elevation.toString()] +
-					" " +
+					style['card'] +
+					' ' +
+					style['card__' + elevation.toString()] +
+					' ' +
 					className
-				}
-			>
-				<h3 className={style["card__title"]}>{title}</h3>
-				<h5 className={style["card__subtitle"]}>{subtitle}</h5>
-				<div className={style["card__content"]}>{children}</div>
+				}>
+				<h3 className={style['card__title']}>{title}</h3>
+				<h5 className={style['card__subtitle']}>{subtitle}</h5>
+				<div className={style['card__content']}>{children}</div>
 			</div>
 		</>
 	);
