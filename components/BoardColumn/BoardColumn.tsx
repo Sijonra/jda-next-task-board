@@ -1,15 +1,15 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState } from 'react';
 
-import styles from "./BoardColumn.module.scss";
-import classNames from "classnames/bind";
+import styles from './BoardColumn.module.scss';
+import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
 
-import Card from "../Card/Card";
-import Badge from "../Badge/Badge";
-import Button from "../Button/Button";
+import Card from '../UiKit/Card/Card';
+import Badge from '../UiKit/Badge/Badge';
+import Button from '../UiKit/Button/Button';
 
-import { TCardList, TSetCardsAction } from "../../@types/types";
-import { useDrag } from "../Context/DragContext";
+import { TCardList, TSetCardsAction } from '../../@types/types';
+import { useDrag } from '../Context/DragContext';
 
 interface BoardColumnProps {
 	cards: TCardList;
@@ -44,9 +44,7 @@ const BoardColumn: FC<BoardColumnProps> = ({
 		e.preventDefault();
 
 		const newCardsArray = allCards.map((card) => {
-			return card.id === currentDragCardId
-				? { ...card, columnId: id }
-				: card;
+			return card.id === currentDragCardId ? { ...card, columnId: id } : card;
 		});
 
 		setCards(newCardsArray);
@@ -54,8 +52,8 @@ const BoardColumn: FC<BoardColumnProps> = ({
 
 	const handleLeave = () => setIsOver(false);
 
-	const columnClasses = `${cx("board-column")} ${
-		isOver ? cx("board__column--over") : ""
+	const columnClasses = `${cx('board-column')} ${
+		isOver ? cx('board__column--over') : ''
 	}`;
 
 	return (
@@ -65,9 +63,8 @@ const BoardColumn: FC<BoardColumnProps> = ({
 			onDragLeave={handleLeave}
 			onDrop={handleDrop}
 			draggable={true}
-			className={columnClasses}
-		>
-			<h4 className={cx("board-column__title")}>{title}</h4>
+			className={columnClasses}>
+			<h4 className={cx('board-column__title')}>{title}</h4>
 			{cards.map((card) => {
 				return (
 					<Card
@@ -76,23 +73,21 @@ const BoardColumn: FC<BoardColumnProps> = ({
 						draggable={true}
 						key={card.id}
 						elevation={3}
-						className={cx("board-column__card", "board-card")}
-					>
+						className={cx('board-column__card', 'board-card')}>
 						{card.content}
 						<Badge
-							color="green"
-							type="badge"
-							theme="solid"
+							color='green'
+							type='badge'
+							theme='solid'
 							text={card.id.toString()}
-							className={cx("board-card__badge")}
+							className={cx('board-card__badge')}
 						/>
 						<Button
 							onClick={() => {
 								onCardDelete(card.id);
 							}}
-							type="regular"
-							className={cx("board-card__close")}
-						>
+							type='regular'
+							className={cx('board-card__close')}>
 							✖
 						</Button>
 					</Card>

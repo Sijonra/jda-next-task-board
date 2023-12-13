@@ -1,3 +1,5 @@
+'use client';
+
 import { FC, useState, useMemo } from 'react';
 
 import styles from './TaskBoardPage.module.scss';
@@ -8,6 +10,7 @@ import BoardInput from '../../components/BoardInput/BoardInput';
 import BoardColumn from '../../components/BoardColumn/BoardColumn';
 import ModalWindow from '../../components/ModalWindow/ModalWindow';
 import { TCardList } from '../../@types/types';
+import { DragProvider } from '@/components/Context/DragContext';
 
 const TaskBoardPage: FC = () => {
 	const [cards, setCards] = useState<TCardList>([]);
@@ -47,43 +50,45 @@ const TaskBoardPage: FC = () => {
 	}, [cards]);
 
 	return (
-		<div className={cx('task-board')}>
-			{modalWindowIsActive && (
-				<ModalWindow
-					closeModalWindowAccept={closeModalWindowAccept}
-					closeModalWindowDecline={closeModalWindowDecline}
-				/>
-			)}
-			<div className={cx('task-board__input')}>
-				<BoardInput setCards={setCards} cards={cards} />
+		<DragProvider>
+			<div className={cx('task-board')}>
+				{modalWindowIsActive && (
+					<ModalWindow
+						closeModalWindowAccept={closeModalWindowAccept}
+						closeModalWindowDecline={closeModalWindowDecline}
+					/>
+				)}
+				<div className={cx('task-board__input')}>
+					<BoardInput setCards={setCards} cards={cards} />
+				</div>
+				<div className={cx('task-board__columns')}>
+					<BoardColumn
+						title='To Do'
+						allCards={cards}
+						setCards={setCards}
+						id={0}
+						cards={toDoCards}
+						onCardDelete={onCardDelete}
+					/>
+					<BoardColumn
+						title='In Progress'
+						allCards={cards}
+						setCards={setCards}
+						id={1}
+						cards={inProgressCards}
+						onCardDelete={onCardDelete}
+					/>
+					<BoardColumn
+						title='done'
+						allCards={cards}
+						setCards={setCards}
+						id={2}
+						cards={doneCards}
+						onCardDelete={onCardDelete}
+					/>
+				</div>
 			</div>
-			<div className={cx('task-board__columns')}>
-				<BoardColumn
-					title='To Do'
-					allCards={cards}
-					setCards={setCards}
-					id={0}
-					cards={toDoCards}
-					onCardDelete={onCardDelete}
-				/>
-				<BoardColumn
-					title='In Progress'
-					allCards={cards}
-					setCards={setCards}
-					id={1}
-					cards={inProgressCards}
-					onCardDelete={onCardDelete}
-				/>
-				<BoardColumn
-					title='done'
-					allCards={cards}
-					setCards={setCards}
-					id={2}
-					cards={doneCards}
-					onCardDelete={onCardDelete}
-				/>
-			</div>
-		</div>
+		</DragProvider>
 	);
 };
 
