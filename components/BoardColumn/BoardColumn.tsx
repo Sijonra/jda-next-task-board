@@ -10,23 +10,22 @@ import Button from '../UiKit/Button/Button';
 
 import { TCardList, TSetCardsAction } from '../../@types/types';
 import { useDrag } from '../Context/DragContext';
+import { CardStore } from '@/stores/cards.store';
 
 interface BoardColumnProps {
-	cards: TCardList;
 	onCardDelete: (cardId: number) => void;
 	id: number;
 	allCards: TCardList;
-	setCards: TSetCardsAction;
 	title: string;
+	cards: TCardList;
 }
 
 const BoardColumn: FC<BoardColumnProps> = ({
-	cards,
 	onCardDelete,
 	id,
 	allCards,
-	setCards,
 	title,
+	cards,
 }) => {
 	const [isOver, setIsOver] = useState<boolean>(false);
 
@@ -47,7 +46,7 @@ const BoardColumn: FC<BoardColumnProps> = ({
 			return card.id === currentDragCardId ? { ...card, columnId: id } : card;
 		});
 
-		setCards(newCardsArray);
+		CardStore.setCards(newCardsArray);
 	};
 
 	const handleLeave = () => setIsOver(false);

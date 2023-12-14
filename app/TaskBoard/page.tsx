@@ -2,6 +2,7 @@
 
 import { FC, useState, useMemo } from 'react';
 
+import { CardStore } from '@/stores/cards.store';
 import styles from './TaskBoardPage.module.scss';
 import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
@@ -11,9 +12,10 @@ import BoardColumn from '../../components/BoardColumn/BoardColumn';
 import ModalWindow from '../../components/ModalWindow/ModalWindow';
 import { TCardList } from '../../@types/types';
 import { DragProvider } from '@/components/Context/DragContext';
+import { observer } from 'mobx-react-lite';
 
-const TaskBoardPage: FC = () => {
-	const [cards, setCards] = useState<TCardList>([]);
+const TaskBoardPage: FC = observer(() => {
+	// const [cards, setCards] = useState<TCardList>([]);
 	const [modalWindowIsActive, setModalWindowIsActive] = useState<boolean>(false);
 	const [deletingCardId, setDeletingCardId] = useState<number | null>(null);
 
@@ -32,22 +34,22 @@ const TaskBoardPage: FC = () => {
 	};
 
 	const removeCard = (cardId: number) => {
-		const newCards = cards.filter((card) => card.id !== cardId);
+		const newCards = CardStore.cards.filter((card) => card.id !== cardId);
 		newCards.map((card, index) => (card.id = index + 1));
-		setCards(newCards);
+		CardStore.setCards(newCards);
 	};
 
 	const toDoCards = useMemo(() => {
-		return cards.filter((card) => card.columnId === 0);
-	}, [cards]);
+		return CardStore.cards.filter((card) => card.columnId === 0);
+	}, [CardStore.cards]);
 
 	const inProgressCards = useMemo(() => {
-		return cards.filter((card) => card.columnId === 1);
-	}, [cards]);
+		return CardStore.cards.filter((card) => card.columnId === 1);
+	}, [CardStore.cards]);
 
 	const doneCards = useMemo(() => {
-		return cards.filter((card) => card.columnId === 2);
-	}, [cards]);
+		return CardStore.cards.filter((card) => card.columnId === 2);
+	}, [CardStore.cards]);
 
 	return (
 		<DragProvider>
@@ -59,29 +61,26 @@ const TaskBoardPage: FC = () => {
 					/>
 				)}
 				<div className={cx('task-board__input')}>
-					<BoardInput setCards={setCards} cards={cards} />
+					<BoardInput />
 				</div>
 				<div className={cx('task-board__columns')}>
 					<BoardColumn
 						title='To Do'
-						allCards={cards}
-						setCards={setCards}
+						allCards={CardStore.cards}
 						id={0}
 						cards={toDoCards}
 						onCardDelete={onCardDelete}
 					/>
 					<BoardColumn
 						title='In Progress'
-						allCards={cards}
-						setCards={setCards}
+						allCards={CardStore.cards}
 						id={1}
 						cards={inProgressCards}
 						onCardDelete={onCardDelete}
 					/>
 					<BoardColumn
 						title='done'
-						allCards={cards}
-						setCards={setCards}
+						allCards={CardStore.cards}
 						id={2}
 						cards={doneCards}
 						onCardDelete={onCardDelete}
@@ -90,6 +89,6 @@ const TaskBoardPage: FC = () => {
 			</div>
 		</DragProvider>
 	);
-};
+});
 
 export default TaskBoardPage;
