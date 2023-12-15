@@ -3,6 +3,7 @@
 import { FC, useState, useMemo } from 'react';
 
 import { CardStore } from '@/stores/cards.store';
+import { TaskBoardStore } from '@/stores/taskBoard.store';
 import styles from './TaskBoardPage.module.scss';
 import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
@@ -10,27 +11,24 @@ const cx = classNames.bind(styles);
 import BoardInput from '../../components/BoardInput/BoardInput';
 import BoardColumn from '../../components/BoardColumn/BoardColumn';
 import ModalWindow from '../../components/ModalWindow/ModalWindow';
-import { TCardList } from '../../@types/types';
 import { DragProvider } from '@/components/Context/DragContext';
 import { observer } from 'mobx-react-lite';
 
 const TaskBoardPage: FC = observer(() => {
-	// const [cards, setCards] = useState<TCardList>([]);
-	const [modalWindowIsActive, setModalWindowIsActive] = useState<boolean>(false);
 	const [deletingCardId, setDeletingCardId] = useState<number | null>(null);
 
 	const closeModalWindowAccept = () => {
 		if (deletingCardId !== null) {
 			removeCard(deletingCardId);
 		}
-		setModalWindowIsActive(false);
+		TaskBoardStore.setModalWindowUnActive;
 	};
 
-	const closeModalWindowDecline = () => setModalWindowIsActive(false);
+	const closeModalWindowDecline = () => TaskBoardStore.setModalWindowUnActive();
 
 	const onCardDelete = (cardId: number) => {
 		setDeletingCardId(cardId);
-		setModalWindowIsActive(true);
+		TaskBoardStore.setModalWindowActive();
 	};
 
 	const removeCard = (cardId: number) => {
@@ -54,7 +52,7 @@ const TaskBoardPage: FC = observer(() => {
 	return (
 		<DragProvider>
 			<div className={cx('task-board')}>
-				{modalWindowIsActive && (
+				{TaskBoardStore.modalWindowIsActive && (
 					<ModalWindow
 						closeModalWindowAccept={closeModalWindowAccept}
 						closeModalWindowDecline={closeModalWindowDecline}
