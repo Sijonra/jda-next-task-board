@@ -11,13 +11,14 @@ import Button from '../UiKit/Button/Button';
 
 import { TCard, TCardList } from '../../@types/types';
 import { TSetCardsAction } from '../../@types/types';
+import { CardStore } from '@/stores/cards.store';
 
 interface BoardInputProps {
-	setCards: TSetCardsAction;
-	cards: TCardList;
+	// setCards: TSetCardsAction;
+	// cards: TCardList;
 }
 
-const BoardInput: FC<BoardInputProps> = ({ setCards, cards }) => {
+const BoardInput: FC<BoardInputProps> = () => {
 	const [inputValue, setInputValue] = useState('');
 
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,13 +26,13 @@ const BoardInput: FC<BoardInputProps> = ({ setCards, cards }) => {
 	};
 
 	const addButtonSubmit = () => {
-		const currentId = cards.length + 1;
+		const currentId = CardStore.cards.length + 1;
 		const currentCard: TCard = {
 			id: currentId,
 			columnId: 0,
 			content: inputValue,
 		};
-		setCards([...cards, currentCard]);
+		CardStore.setCards([...CardStore.cards, currentCard]);
 		setInputValue('');
 	};
 
