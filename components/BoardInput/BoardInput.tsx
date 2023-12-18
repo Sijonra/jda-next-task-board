@@ -1,7 +1,10 @@
+'use client';
+
 import { FC } from 'react';
 
 import styles from './BoardInput.module.scss';
 import classNames from 'classnames/bind';
+
 const cx = classNames.bind(styles);
 
 import { useState } from 'react';
