@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import style from './Card.module.scss';
-import { useDrag } from '../../Context/DragContext';
+import { CardStore } from '@/stores/cards.store';
+import { observer } from 'mobx-react-lite';
 
 interface CardProps {
 	elevation: 1 | 2 | 3;
@@ -13,44 +14,40 @@ interface CardProps {
 	currentColumnId: number;
 }
 
-const Card: FC<CardProps> = ({
-	elevation,
-	title,
-	subtitle,
-	children,
-	draggable,
-	className,
-	cardId,
-}) => {
-	const { setCurrentDragCardId } = useDrag();
+const Card: FC<CardProps> = observer(
+	({ elevation, title, subtitle, children, draggable, className, cardId }) => {
+		const handleDragStart = () => {
+			CardStore.setCurrentDragCardId(cardId);
+		};
 
-	const handleDragStart = () => setCurrentDragCardId(cardId);
+		const handleDragEnd = () => {
+			CardStore.setCurrentDragCardId(undefined);
+		};
 
-	const handleDragEnd = () => setCurrentDragCardId(undefined);
+		const handleDragOver = (e: React.DragEvent) => e.preventDefault();
 
-	const handleDragOver = (e: React.DragEvent) => e.preventDefault();
-
-	return (
-		<>
-			<div
-				onDragStart={handleDragStart}
-				onDragLeave={() => {}}
-				onDragOver={handleDragOver}
-				onDragEnd={handleDragEnd}
-				draggable={draggable}
-				className={
-					style['card'] +
-					' ' +
-					style['card__' + elevation.toString()] +
-					' ' +
-					className
-				}>
-				<h3 className={style['card__title']}>{title}</h3>
-				<h5 className={style['card__subtitle']}>{subtitle}</h5>
-				<div className={style['card__content']}>{children}</div>
-			</div>
-		</>
-	);
-};
+		return (
+			<>
+				<div
+					onDragStart={handleDragStart}
+					onDragLeave={() => {}}
+					onDragOver={handleDragOver}
+					onDragEnd={handleDragEnd}
+					draggable={draggable}
+					className={
+						style['card'] +
+						' ' +
+						style['card__' + elevation.toString()] +
+						' ' +
+						className
+					}>
+					<h3 className={style['card__title']}>{title}</h3>
+					<h5 className={style['card__subtitle']}>{subtitle}</h5>
+					<div className={style['card__content']}>{children}</div>
+				</div>
+			</>
+		);
+	}
+);
 
 export default Card;

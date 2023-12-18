@@ -2,6 +2,7 @@ import { makeAutoObservable } from 'mobx';
 
 class TaskBoardPageStore {
 	modalWindowIsActive: boolean = false;
+	inputValue: string = '';
 
 	constructor() {
 		makeAutoObservable(this);
@@ -13,6 +14,10 @@ class TaskBoardPageStore {
 
 	setModalWindowUnActive() {
 		this.modalWindowIsActive = false;
+	}
+
+	setInputValue(value: string) {
+		this.inputValue = value;
 	}
 }
 

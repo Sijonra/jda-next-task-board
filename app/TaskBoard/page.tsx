@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, useState, useMemo } from 'react';
+import { FC, useMemo } from 'react';
 
 import { CardStore } from '@/stores/cards.store';
 import { TaskBoardStore } from '@/stores/taskBoard.store';
@@ -11,23 +11,20 @@ const cx = classNames.bind(styles);
 import BoardInput from '../../components/BoardInput/BoardInput';
 import BoardColumn from '../../components/BoardColumn/BoardColumn';
 import ModalWindow from '../../components/ModalWindow/ModalWindow';
-import { DragProvider } from '@/components/Context/DragContext';
 import { observer } from 'mobx-react-lite';
 
 const TaskBoardPage: FC = observer(() => {
-	const [deletingCardId, setDeletingCardId] = useState<number | null>(null);
-
 	const closeModalWindowAccept = () => {
-		if (deletingCardId !== null) {
-			removeCard(deletingCardId);
+		if (CardStore.deletingCardId !== null) {
+			removeCard(CardStore.deletingCardId);
 		}
-		TaskBoardStore.setModalWindowUnActive;
+		TaskBoardStore.setModalWindowUnActive();
 	};
 
 	const closeModalWindowDecline = () => TaskBoardStore.setModalWindowUnActive();
 
 	const onCardDelete = (cardId: number) => {
-		setDeletingCardId(cardId);
+		CardStore.setDeletingCardId(cardId);
 		TaskBoardStore.setModalWindowActive();
 	};
 
@@ -50,42 +47,40 @@ const TaskBoardPage: FC = observer(() => {
 	}, [CardStore.cards]);
 
 	return (
-		<DragProvider>
-			<div className={cx('task-board')}>
-				{TaskBoardStore.modalWindowIsActive && (
-					<ModalWindow
-						closeModalWindowAccept={closeModalWindowAccept}
-						closeModalWindowDecline={closeModalWindowDecline}
-					/>
-				)}
-				<div className={cx('task-board__input')}>
-					<BoardInput />
-				</div>
-				<div className={cx('task-board__columns')}>
-					<BoardColumn
-						title='To Do'
-						allCards={CardStore.cards}
-						id={0}
-						cards={toDoCards}
-						onCardDelete={onCardDelete}
-					/>
-					<BoardColumn
-						title='In Progress'
-						allCards={CardStore.cards}
-						id={1}
-						cards={inProgressCards}
-						onCardDelete={onCardDelete}
-					/>
-					<BoardColumn
-						title='done'
-						allCards={CardStore.cards}
-						id={2}
-						cards={doneCards}
-						onCardDelete={onCardDelete}
-					/>
-				</div>
+		<div className={cx('task-board')}>
+			{TaskBoardStore.modalWindowIsActive && (
+				<ModalWindow
+					closeModalWindowAccept={closeModalWindowAccept}
+					closeModalWindowDecline={closeModalWindowDecline}
+				/>
+			)}
+			<div className={cx('task-board__input')}>
+				<BoardInput />
 			</div>
-		</DragProvider>
+			<div className={cx('task-board__columns')}>
+				<BoardColumn
+					title='To Do'
+					allCards={CardStore.cards}
+					id={0}
+					cards={toDoCards}
+					onCardDelete={onCardDelete}
+				/>
+				<BoardColumn
+					title='In Progress'
+					allCards={CardStore.cards}
+					id={1}
+					cards={inProgressCards}
+					onCardDelete={onCardDelete}
+				/>
+				<BoardColumn
+					title='done'
+					allCards={CardStore.cards}
+					id={2}
+					cards={doneCards}
+					onCardDelete={onCardDelete}
+				/>
+			</div>
+		</div>
 	);
 });
 
