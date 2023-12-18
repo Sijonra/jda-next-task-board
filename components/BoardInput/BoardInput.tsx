@@ -7,25 +7,17 @@ import classNames from 'classnames/bind';
 
 const cx = classNames.bind(styles);
 
-import { useState } from 'react';
-
 import Input from '../UiKit/Input/Input';
 import Button from '../UiKit/Button/Button';
 
-import { TCard, TCardList } from '../../@types/types';
-import { TSetCardsAction } from '../../@types/types';
+import { TCard } from '../../@types/types';
 import { CardStore } from '@/stores/cards.store';
+import { TaskBoardStore } from '@/stores/taskBoard.store';
+import { observer } from 'mobx-react-lite';
 
-interface BoardInputProps {
-	// setCards: TSetCardsAction;
-	// cards: TCardList;
-}
-
-const BoardInput: FC<BoardInputProps> = () => {
-	const [inputValue, setInputValue] = useState('');
-
+const BoardInput: FC = observer(() => {
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setInputValue(event.target.value);
+		TaskBoardStore.setInputValue(event.target.value);
 	};
 
 	const addButtonSubmit = () => {
@@ -33,17 +25,17 @@ const BoardInput: FC<BoardInputProps> = () => {
 		const currentCard: TCard = {
 			id: currentId,
 			columnId: 0,
-			content: inputValue,
+			content: TaskBoardStore.inputValue,
 		};
 		CardStore.setCards([...CardStore.cards, currentCard]);
-		setInputValue('');
+		TaskBoardStore.setInputValue('');
 	};
 
 	return (
 		<div className={cx('board-input')}>
 			<Input
 				onChange={handleInputChange}
-				value={inputValue}
+				value={TaskBoardStore.inputValue}
 				className={cx('board-input__input')}
 				placeholder='add new task'
 			/>
@@ -56,6 +48,6 @@ const BoardInput: FC<BoardInputProps> = () => {
 			</Button>
 		</div>
 	);
-};
+});
 
 export default BoardInput;
