@@ -6,10 +6,10 @@ import styles from './TaskBoardPage.module.scss';
 import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
 
-import BoardInput from '../../components/BoardInput/BoardInput';
 import BoardColumn from '../../components/BoardColumn/BoardColumn';
 import ModalWindow from '../../components/ModalWindow/ModalWindow';
 import { TCardList } from '@/@types/types';
+import BoardInput from '@/components/BoardInput/BoardInput.hoc';
 
 interface ITaskBoardPageView {
 	closeModalWindowAccept: () => void;
